@@ -1,1 +1,395 @@
-<h1>Ke1221</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简洁个人信息卡片</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0a0e17;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+        
+        .card-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .personal-card {
+            background: linear-gradient(145deg, #121826, #0d111c);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+            animation: cardAppear 0.8s ease-out;
+        }
+        
+        .personal-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #2a3a5a;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 2;
+            background-color: #1a2332;
+        }
+        
+        .avatar:hover {
+            border-color: #7a93c4;
+            transform: scale(1.05);
+        }
+        
+        .avatar-frame {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7a93c4, #3a5a9a, #7a93c4);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .avatar-container:hover .avatar-frame {
+            opacity: 0.6;
+            animation: rotate 3s linear infinite;
+        }
+        
+        .nickname {
+            font-size: 28px;
+            font-weight: 600;
+            color: #e0e0e0;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        
+        .nickname::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #7a93c4, transparent);
+            animation: linePulse 2s infinite;
+        }
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: rgba(26, 35, 50, 0.6);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .info-item:hover {
+            background-color: rgba(42, 58, 90, 0.6);
+            border-left-color: #7a93c4;
+            transform: translateX(5px);
+        }
+        
+        .icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a2332;
+            border-radius: 10px;
+            margin-right: 15px;
+            color: #7a93c4;
+            font-size: 18px;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .label {
+            font-size: 12px;
+            color: #8a9bb8;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+        
+        .value {
+            font-size: 15px;
+            color: #e0e0e0;
+            word-break: break-all;
+        }
+        
+        .website .value {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        a {
+            color: #7a93c4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+        
+        a:hover {
+            color: #a0b8f0;
+        }
+        
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: #7a93c4;
+            transition: width 0.3s ease;
+        }
+        
+        a:hover::after {
+            width: 100%;
+        }
+        
+        /* 动画定义 */
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes linePulse {
+            0%, 100% {
+                width: 40px;
+                opacity: 0.8;
+            }
+            50% {
+                width: 60px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        
+        .floating-dots {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(122, 147, 196, 0.4);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+        
+        .dot:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+        .dot:nth-child(2) { top: 25%; left: 85%; animation-delay: 1s; }
+        .dot:nth-child(3) { top: 70%; left: 15%; animation-delay: 2s; }
+        .dot:nth-child(4) { top: 80%; left: 90%; animation-delay: 3s; }
+        .dot:nth-child(5) { top: 40%; left: 5%; animation-delay: 4s; }
+        .dot:nth-child(6) { top: 10%; left: 70%; animation-delay: 0.5s; }
+        
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .personal-card {
+                padding: 30px 20px;
+            }
+            
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .nickname {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="personal-card">
+            <!-- 浮动圆点背景 -->
+            <div class="floating-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            
+            <div class="card-header">
+                <div class="avatar-container">
+                    <div class="avatar-frame"></div>
+                    <!-- 请替换下面的src为您自己的头像地址 -->
+                    <img src="https://img.ke1221.cn/ke/ke.png" 
+                         alt="头像" 
+                         class="avatar">
+                </div>
+                <h1 class="nickname">*        嬲</h1>
+            </div>
+            
+            <div class="card-body">
+                <div class="info-item">
+                    <div class="icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="label">邮箱</div>
+                        <div class="value">ke1221@qq.com</div>
+                    </div>
+                </div>
+                
+                <div class="info-item website">
+                    <div class="icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="label">网址</div>
+                        <div class="value">
+                            <a href="https://ke1221.cn" target="_blank" rel="noopener noreferrer">ke1221.cn</a>
+                            <a href="https://www.ke1221.cn" target="_blank" rel="noopener noreferrer">www.ke1221.cn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 添加卡片加载后的微交互
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.personal-card');
+            const infoItems = document.querySelectorAll('.info-item');
+            const avatar = document.querySelector('.avatar');
+            
+            // 卡片加载后添加轻微抖动效果
+            setTimeout(() => {
+                card.style.transform = 'translateY(-5px)';
+                setTimeout(() => {
+                    card.style.transform = 'translateY(0)';
+                }, 200);
+            }, 800);
+            
+            // 为每个信息项添加延迟显示效果
+            infoItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-10px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 600 + (index * 150));
+            });
+            
+            // 点击邮箱复制功能
+            const emailItem = document.querySelector('.info-item:first-child');
+            emailItem.addEventListener('click', function() {
+                const email = 'ke1221@qq.com';
+                navigator.clipboard.writeText(email).then(() => {
+                    const icon = this.querySelector('.icon i');
+                    const originalClass = icon.className;
+                    
+                    // 临时改变图标表示复制成功
+                    icon.className = 'fas fa-check';
+                    setTimeout(() => {
+                        icon.className = originalClass;
+                    }, 1000);
+                    
+                    // 添加复制成功视觉反馈
+                    this.style.backgroundColor = 'rgba(58, 90, 154, 0.6)';
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                    }, 800);
+                });
+            });
+            
+            // 头像加载失败时的备用方案
+            avatar.onerror = function() {
+                this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231a2332' stroke='%232a3a5a' stroke-width='4'/%3E%3Cpath d='M50 30c-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15zm0 40c-11.046 0-20 8.954-20 20h40c0-11.046-8.954-20-20-20z' fill='%237a93c4'/%3E%3C/svg%3E";
+            };
+        });
+    </script>
+</body>
+</html>
